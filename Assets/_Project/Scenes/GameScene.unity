@@ -3083,14 +3083,6 @@ PrefabInstance:
       value: PF_DeadZone
       objectReference: {fileID: 0}
     - target: {fileID: 3511248749357293347, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3511248749357293347, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3511248749357293347, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.195
       objectReference: {fileID: 0}
@@ -3130,17 +3122,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3891948754554891069, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 4196064755231103981, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
+      propertyPath: initSpawn
+      value: 
+      objectReference: {fileID: 1259331736}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1838119733457363227, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1533252183}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
 --- !u!4 &1259331736 stripped
 Transform:
@@ -4042,24 +4031,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!1 &1533252182 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1838119733457363227, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
-  m_PrefabInstance: {fileID: 1058896051}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1533252183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1533252182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bd38b54e8cd07148a00fd40d2c04130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Respawner
-  initSpawn: {fileID: 1259331736}
 --- !u!4 &1536548348 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4193889353089033803, guid: 93965f0a128f5944fa4526c270994948, type: 3}
