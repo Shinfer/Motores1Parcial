@@ -2199,7 +2199,7 @@ GameObject:
   - component: {fileID: 2887284471629774812}
   - component: {fileID: 4141995389207872227}
   m_Layer: 0
-  m_Name: Stairs
+  m_Name: PF_Stairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

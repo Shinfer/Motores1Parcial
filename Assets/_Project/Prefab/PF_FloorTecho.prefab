@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1713453774029521843}
   - component: {fileID: 7025731503956639362}
   m_Layer: 0
-  m_Name: FloorTecho
+  m_Name: PF_FloorTecho
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

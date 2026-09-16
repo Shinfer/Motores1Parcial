@@ -3435,7 +3435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5353901411997234443}
   m_Layer: 0
-  m_Name: Building
+  m_Name: PF_Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
