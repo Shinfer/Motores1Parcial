@@ -2764,6 +2764,24 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &917126355 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1838119733457363227, guid: 23574d2d3a3f3c348b20e9a7c2a15ade, type: 3}
+  m_PrefabInstance: {fileID: 207924660358931229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &917126360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917126355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd38b54e8cd07148a00fd40d2c04130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Respawner
+  initSpawn: {fileID: 531524564458962825}
 --- !u!1001 &920879521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6230,6 +6248,14 @@ PrefabInstance:
     - target: {fileID: 254639956189511847, guid: 93965f0a128f5944fa4526c270994948, type: 3}
       propertyPath: m_Name
       value: PF_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 254639956189511847, guid: 93965f0a128f5944fa4526c270994948, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 254639956189511847, guid: 93965f0a128f5944fa4526c270994948, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4146852918198889235, guid: 93965f0a128f5944fa4526c270994948, type: 3}
       propertyPath: m_LocalPosition.x
