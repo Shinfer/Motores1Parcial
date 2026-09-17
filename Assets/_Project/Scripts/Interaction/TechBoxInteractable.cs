@@ -43,7 +43,8 @@ public class TechBoxInteractable : MonoBehaviour, Interactable
         else
         {
             status += "\nConexion: Establecida";
-        }        
+            status += "\nCompletaste el prototipo";
+        }
         worldMessage.ShowMessage(status); // Muestra el estado mediante WorldMessage.
     }
 }
