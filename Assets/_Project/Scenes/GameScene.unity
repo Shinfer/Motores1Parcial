@@ -6714,6 +6714,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_ZafeZone
       objectReference: {fileID: 0}
+    - target: {fileID: 4160525502568750106, guid: 905c5cf4b99682344b4275a064475f9b, type: 3}
+      propertyPath: m_text
+      value: Estas en la Zona Segura
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7017,3 +7021,4 @@ SceneRoots:
   - {fileID: 1058896051}
   - {fileID: 8491135482564950650}
   - {fileID: 644945632}
+  - {fileID: 6250442277721761585}
