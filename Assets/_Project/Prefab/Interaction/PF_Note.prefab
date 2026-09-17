@@ -477,8 +477,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoteInteractable
   notePanel: {fileID: 321617584172729055}
   noteText: {fileID: 743818962896509798}
-  noteContent: "La conexi\xF3n sigue sin funcionar. Revis\xE9 la primera caja, pero
-    el problema parece estar en el estacionamiento.\n"
+  noteContent: "La conexi\xF3n sigue sin funcionar. El problema parece estar en el
+    estacionamiento.\n"
   displayDuration: 10
 --- !u!1 &7072764265220109869
 GameObject:
