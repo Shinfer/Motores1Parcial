@@ -6,6 +6,7 @@ public class DoorInteractable : MonoBehaviour, Interactable
     [Header("References")]
     [SerializeField] private Transform doorPivot;
     [SerializeField] private WorldMessage worldMessage;
+    [SerializeField] private AudioSource doorSound;
     [Header("Door Settings")]
     [SerializeField] private bool locked = false; //para las puertas bloqueadas
     [SerializeField] private bool invertOpeningDirection = false; //a veces es necesario girar esto de forma prederterminada
@@ -17,8 +18,8 @@ public class DoorInteractable : MonoBehaviour, Interactable
     private float currentAngle;
     private float targetAngle;
 
-    private void Update() 
-    {        
+    private void Update()
+    {
         if (isMoving) // La puerta gira solamente cuando esta en movimiento.
         {
             currentAngle = Mathf.MoveTowards(
@@ -36,15 +37,20 @@ public class DoorInteractable : MonoBehaviour, Interactable
         }
     }
     public void Interact(Transform player)
-    {        
+    {
         if (locked) // Una puerta bloqueada muestra un mensaje.
         {
             worldMessage.ShowMessage("Puerta bloqueada");
             return;
-        }        
+        }
         if (isMoving) // No permite nuevas interacciones mientras gira.
         {
             return;
+        }
+
+        if (doorSound != null)
+        {
+            doorSound.Play();
         }
 
         if (isOpen)
@@ -57,7 +63,7 @@ public class DoorInteractable : MonoBehaviour, Interactable
         }
     }
     private void OpenDoor(Transform player)
-    {        
+    {
         Vector3 playerDirection = player.position - transform.position; // Obtiene la direccion desde la puerta hacia el jugador.
         float side = Vector3.Dot(transform.forward, playerDirection); // Determina de que lado esta el jugador.
         if (side >= 0f) // Elige el angulo segun la posicion del jugador.
@@ -77,7 +83,7 @@ public class DoorInteractable : MonoBehaviour, Interactable
     }
 
     private void CloseDoor() // Regresa a la posicion original.
-    {        
+    {
         targetAngle = 0f;
         isOpen = false;
         isMoving = true;
