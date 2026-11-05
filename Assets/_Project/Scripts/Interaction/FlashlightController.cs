@@ -4,13 +4,15 @@ public class FlashlightController : MonoBehaviour
 {
     public Light flashlightLight;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource toggleSound;
+
     [Min(0)]
     public int durationSeconds = 300;
 
     public bool startsOn = false;
 
-    [SerializeField]
-    private int remainingSeconds;
+    [SerializeField] private int remainingSeconds;
 
     private float remainingTime;
     private bool isOn;
@@ -19,7 +21,7 @@ public class FlashlightController : MonoBehaviour
         ? Mathf.CeilToInt(remainingTime / durationSeconds * 100f)
         : 100;
 
-    void Start()
+    private void Start()
     {
         remainingTime = durationSeconds;
         remainingSeconds = durationSeconds;
@@ -30,15 +32,15 @@ public class FlashlightController : MonoBehaviour
             TurnOff();
     }
 
-    void Update()
+    private void Update()
     {
         if (isOn && durationSeconds > 0)
         {
             remainingTime -= Time.deltaTime;
 
-            if (remainingTime <= 0)
+            if (remainingTime <= 0f)
             {
-                remainingTime = 0;
+                remainingTime = 0f;
                 remainingSeconds = 0;
                 TurnOff();
             }
@@ -53,16 +55,22 @@ public class FlashlightController : MonoBehaviour
     {
         remainingTime *= 0.5f;
         remainingSeconds = Mathf.CeilToInt(remainingTime);
+
         if (remainingSeconds <= 0)
             TurnOff();
     }
 
     public void ToggleFlashlight()
     {
+        bool wasOn = isOn;
+
         if (isOn)
             TurnOff();
         else
             TurnOn();
+
+        if (wasOn != isOn && toggleSound != null)
+            toggleSound.Play();
     }
 
     public void TurnOn()
