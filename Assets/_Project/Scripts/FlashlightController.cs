@@ -15,19 +15,19 @@ public class FlashlightController : MonoBehaviour
     private float remainingTime;
     private bool isOn;
 
+    public int BatteryPercent => durationSeconds > 0
+        ? Mathf.CeilToInt(remainingTime / durationSeconds * 100f)
+        : 100;
+
     void Start()
     {
         remainingTime = durationSeconds;
         remainingSeconds = durationSeconds;
 
         if (startsOn)
-        {
             TurnOn();
-        }
         else
-        {
             TurnOff();
-        }
     }
 
     void Update()
@@ -40,7 +40,6 @@ public class FlashlightController : MonoBehaviour
             {
                 remainingTime = 0;
                 remainingSeconds = 0;
-
                 TurnOff();
             }
             else
@@ -50,24 +49,26 @@ public class FlashlightController : MonoBehaviour
         }
     }
 
+    public void HalveBattery()
+    {
+        remainingTime *= 0.5f;
+        remainingSeconds = Mathf.CeilToInt(remainingTime);
+        if (remainingSeconds <= 0)
+            TurnOff();
+    }
+
     public void ToggleFlashlight()
     {
         if (isOn)
-        {
             TurnOff();
-        }
         else
-        {
             TurnOn();
-        }
     }
 
     public void TurnOn()
     {
         if (durationSeconds > 0 && remainingSeconds <= 0)
-        {
             return;
-        }
 
         isOn = true;
         flashlightLight.enabled = true;

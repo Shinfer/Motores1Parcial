@@ -9,6 +9,10 @@ public class SwitchInteractable : MonoBehaviour, Interactable
     [Header("Settings")]
     [SerializeField] private bool startsOn;
     [SerializeField] private float lightDuration = 0f;
+    [SerializeField] private Material materialEncendido;
+    [SerializeField] private Material materialApagado;
+
+    public bool IsOn => isOn;
 
     private bool isOn;
     private float remainingTime; //tiempo restante
@@ -16,14 +20,16 @@ public class SwitchInteractable : MonoBehaviour, Interactable
     private void Start()
     {
         isOn = startsOn;
-        remainingTime = lightDuration;        
+        remainingTime = lightDuration;
         foreach (Light light in controlledLights) // Configura el estado inicial de las luces.
         {
-            light.enabled = isOn;
+            foreach (Light childLight in light.GetComponentsInChildren<Light>(true))
+                childLight.enabled = isOn;
         }
+        ActualizarMateriales();
     }
     private void Update()
-    {        
+    {
         if (isOn && lightDuration > 0f) // Cero significa que las luces no tienen temporizador.
         {
             remainingTime -= Time.deltaTime; //contador
@@ -33,8 +39,19 @@ public class SwitchInteractable : MonoBehaviour, Interactable
             }
         }
     }
+    private void ActualizarMateriales()
+    {
+        foreach (Light light in controlledLights)
+        {
+            MeshRenderer foco = light.GetComponentInChildren<MeshRenderer>(true);
+
+            Material[] materiales = foco.materials;
+            materiales[1] = isOn ? materialEncendido : materialApagado;
+            foco.materials = materiales;
+        }
+    }
     public void Interact(Transform player)
-    {        
+    {
         if (isOn) // Alterna entre encendido y apagado.
         {
             TurnOff();
@@ -46,21 +63,25 @@ public class SwitchInteractable : MonoBehaviour, Interactable
     }
     private void TurnOn()
     {
-        isOn = true;        
+        isOn = true;
         remainingTime = lightDuration; // Reinicia el temporizador en cada encendido.
         foreach (Light light in controlledLights)
         {
-            light.enabled = true;
+            foreach (Light childLight in light.GetComponentsInChildren<Light>(true))
+                childLight.enabled = true;
         }
         worldMessage.ShowMessage("Luces encendidas");
+        ActualizarMateriales();
     }
     private void TurnOff()
     {
         isOn = false;
         foreach (Light light in controlledLights)
         {
-            light.enabled = false;
+            foreach (Light childLight in light.GetComponentsInChildren<Light>(true))
+                childLight.enabled = false;
         }
         worldMessage.ShowMessage("Luces apagadas");
+        ActualizarMateriales();
     }
 }

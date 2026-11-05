@@ -1,50 +1,43 @@
-
 using UnityEngine;
 
 public class TechBoxInteractable : MonoBehaviour, Interactable
 {
     [Header("References")]
     [SerializeField] private WorldMessage worldMessage;
-    [SerializeField] private TechBoxInteractable secondBox;
+    [SerializeField] private TechBoxInteractable otherBox;
+    [SerializeField] private FlashlightController flashlight;
+    [SerializeField] private DoorInteractable finalDoor;
+
     [Header("Settings")]
     [SerializeField] private bool isFirstBox;
+
     private bool isOn;
+    private bool escapeStarted;
 
     public void Interact(Transform player)
-    {        
-        if (isFirstBox && !secondBox.isOn) // La primera caja necesita que la segunda este encendida.
-        {
-            worldMessage.ShowMessage(
-                "Estado: Apagado\n" +
-                "Conexion: Interrumpida\n\n" +
-                "Busca y activa la segunda caja."
-            );
-
-            return;
-        }        
-        isOn = true; // Activa la caja y conserva su estado.
-        ShowStatus();
-    }
-    private void ShowStatus()
     {
-        string status;        
-        if (isOn) // Determina el estado de encendido.
+        if (isFirstBox && isOn && otherBox.isOn && !escapeStarted)
         {
-            status = "Estado: Encendido";
+            escapeStarted = true;
+            finalDoor.Unlock();
+            worldMessage.ShowMessage("Energia restablecida. La puerta principal se ha desbloqueado. ¡Es mi oportunidad de escapar!");
+            return;
         }
-        else
+
+        if (isOn)
         {
-            status = "Estado: Apagado";
-        }        
-        if (isFirstBox && !isOn) // Agrega el estado de la conexion.
-        {
-            status += "\nConexion: Interrumpida";
+            worldMessage.ShowMessage("Estado: Encendido");
+            return;
         }
-        else
+
+        if (!isFirstBox && !otherBox.isOn)
         {
-            status += "\nConexion: Establecida";
-            status += "\nCompletaste el prototipo";
+            worldMessage.ShowMessage("Primero repara la caja 1.");
+            return;
         }
-        worldMessage.ShowMessage(status); // Muestra el estado mediante WorldMessage.
+
+        isOn = true;
+        flashlight.HalveBattery();
+        worldMessage.ShowMessage("Caja reparada. Bateria de linterna reducida a la mitad.");
     }
 }

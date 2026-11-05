@@ -160,10 +160,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   controlledLights:
   - {fileID: 0}
-  - {fileID: 0}
   worldMessage: {fileID: 2122933938552923612}
   startsOn: 0
   lightDuration: 5
+  materialEncendido: {fileID: 2100000, guid: 81a4ece778899274f81e8b98fb55ace4, type: 2}
+  materialApagado: {fileID: 2100000, guid: 650189f6fe1915140bb1bdb8b89aa65f, type: 2}
 --- !u!1001 &5941484225439532170
 PrefabInstance:
   m_ObjectHideFlags: 0
