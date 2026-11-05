@@ -82,6 +82,11 @@ public class DoorInteractable : MonoBehaviour, Interactable
         isMoving = true;
     }
 
+    public void Unlock()
+    {
+        locked = false;
+    }
+
     private void CloseDoor() // Regresa a la posicion original.
     {
         targetAngle = 0f;
