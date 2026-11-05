@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4146852918198889235}
-  - component: {fileID: 6872031850463624119}
   m_Layer: 0
   m_Name: PF_Player
   m_TagString: Player
@@ -35,14 +34,6 @@ Transform:
   - {fileID: 124608130508932118}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &6872031850463624119
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254639956189511847}
-  m_Enabled: 1
 --- !u!1 &3158319773560582269
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +139,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2329352162802592403}
+    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9054779725710482135}
   m_SourcePrefab: {fileID: 100100000, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
 --- !u!1 &3564705250425863409 stripped
 GameObject:
@@ -166,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466f1d3e514392243864a2dd272023b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  flashlight: {fileID: 2466817618492284385}
+  flashlight: {fileID: 4299286893967463454}
 --- !u!114 &4099280540962572446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,10 +186,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46e5b67f13851a40b77b47b15d43cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDarkness
-  flashlight: {fileID: 2466817618492284385}
+  flashlight: {fileID: 0}
   countdownText: {fileID: 0}
   darknessDuration: 10
   deathSceneName: DeathScene
+--- !u!81 &9054779725710482135
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3564705250425863409}
+  m_Enabled: 1
 --- !u!4 &4193889353089033803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
@@ -270,25 +272,145 @@ PrefabInstance:
       propertyPath: m_Color.g
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4080699929598530889, guid: 36bcdf8bd121a6a45a3fdbd1a9d509bf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3238962826267877053, guid: 36bcdf8bd121a6a45a3fdbd1a9d509bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4299286893967463454}
+    - targetCorrespondingSourceObject: {fileID: 3238962826267877053, guid: 36bcdf8bd121a6a45a3fdbd1a9d509bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8332159100204223823}
   m_SourcePrefab: {fileID: 100100000, guid: 36bcdf8bd121a6a45a3fdbd1a9d509bf, type: 3}
---- !u!114 &2466817618492284385 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4080699929598530889, guid: 36bcdf8bd121a6a45a3fdbd1a9d509bf, type: 3}
+--- !u!1 &3920789183960094229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3238962826267877053, guid: 36bcdf8bd121a6a45a3fdbd1a9d509bf, type: 3}
   m_PrefabInstance: {fileID: 1916962766506608808}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &4299286893967463454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3920789183960094229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b6384f3ac1659e43889585cbaaefcd4, type: 3}
+  m_Script: {fileID: 11500000, guid: fc401a1c7b3e99a4d8068dd4c63b3446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlashlightController
+  flashlightLight: {fileID: 5198780813098406539}
+  toggleSound: {fileID: 8332159100204223823}
+  durationSeconds: 300
+  startsOn: 0
+  remainingSeconds: 0
+--- !u!82 &8332159100204223823
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3920789183960094229}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -724652437082206635, guid: dab6fad5719bce6419068f0e4b6f5058, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 61022d644acd9d74bba5ed828518435a, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 2
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &4030237891566802957 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3275281829832052901, guid: 36bcdf8bd121a6a45a3fdbd1a9d509bf, type: 3}
+  m_PrefabInstance: {fileID: 1916962766506608808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &5198780813098406539 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 5962674510348818979, guid: 36bcdf8bd121a6a45a3fdbd1a9d509bf, type: 3}
   m_PrefabInstance: {fileID: 1916962766506608808}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2091875678655204206
@@ -445,7 +567,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8944336655422409497, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class DoorInteractable : MonoBehaviour, Interactable
@@ -7,9 +6,10 @@ public class DoorInteractable : MonoBehaviour, Interactable
     [SerializeField] private Transform doorPivot;
     [SerializeField] private WorldMessage worldMessage;
     [SerializeField] private AudioSource doorSound;
+
     [Header("Door Settings")]
-    [SerializeField] private bool locked = false; //para las puertas bloqueadas
-    [SerializeField] private bool invertOpeningDirection = false; //a veces es necesario girar esto de forma prederterminada
+    [SerializeField] private bool locked = false;
+    [SerializeField] private bool invertOpeningDirection = false;
     [SerializeField] private float openingAngle = 100f;
     [SerializeField] private float rotationSpeed = 180f;
 
@@ -20,64 +20,54 @@ public class DoorInteractable : MonoBehaviour, Interactable
 
     private void Update()
     {
-        if (isMoving) // La puerta gira solamente cuando esta en movimiento.
+        if (isMoving)
         {
             currentAngle = Mathf.MoveTowards(
                 currentAngle,
                 targetAngle,
                 rotationSpeed * Time.deltaTime
             );
+
             doorPivot.localRotation = Quaternion.Euler(0f, currentAngle, 0f);
 
-            // Termina el movimiento al alcanzar el angulo.
             if (currentAngle == targetAngle)
-            {
                 isMoving = false;
-            }
         }
     }
+
     public void Interact(Transform player)
     {
-        if (locked) // Una puerta bloqueada muestra un mensaje.
+        if (locked)
         {
             worldMessage.ShowMessage("Puerta bloqueada");
             return;
         }
-        if (isMoving) // No permite nuevas interacciones mientras gira.
-        {
+
+        if (isMoving)
             return;
-        }
 
         if (doorSound != null)
-        {
             doorSound.Play();
-        }
 
         if (isOpen)
-        {
             CloseDoor();
-        }
         else
-        {
             OpenDoor(player);
-        }
     }
+
     private void OpenDoor(Transform player)
     {
-        Vector3 playerDirection = player.position - transform.position; // Obtiene la direccion desde la puerta hacia el jugador.
-        float side = Vector3.Dot(transform.forward, playerDirection); // Determina de que lado esta el jugador.
-        if (side >= 0f) // Elige el angulo segun la posicion del jugador.
-        {
+        Vector3 playerDirection = player.position - transform.position;
+        float side = Vector3.Dot(transform.forward, playerDirection);
+
+        if (side >= 0f)
             targetAngle = openingAngle;
-        }
         else
-        {
             targetAngle = -openingAngle;
-        }
-        if (invertOpeningDirection) // Permite corregir puertas con orientacion invertida.
-        {
+
+        if (invertOpeningDirection)
             targetAngle = -targetAngle;
-        }
+
         isOpen = true;
         isMoving = true;
     }
@@ -87,7 +77,7 @@ public class DoorInteractable : MonoBehaviour, Interactable
         locked = false;
     }
 
-    private void CloseDoor() // Regresa a la posicion original.
+    private void CloseDoor()
     {
         targetAngle = 0f;
         isOpen = false;
