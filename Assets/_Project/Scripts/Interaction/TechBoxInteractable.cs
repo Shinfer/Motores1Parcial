@@ -8,6 +8,9 @@ public class TechBoxInteractable : MonoBehaviour, Interactable
     [SerializeField] private FlashlightController flashlight;
     [SerializeField] private DoorInteractable finalDoor;
     [SerializeField] private AudioSource staticSound;
+    [SerializeField] private AudioSource voice;
+    [SerializeField] private AudioClip connInterruptedVoice;
+    [SerializeField] private AudioClip connRestoredVoice;
 
     [Header("Settings")]
     [SerializeField] private bool isFirstBox;
@@ -30,6 +33,13 @@ public class TechBoxInteractable : MonoBehaviour, Interactable
         {
             escapeStarted = true;
             finalDoor.Unlock();
+
+            if (voice != null && connRestoredVoice != null)
+            {
+                voice.Stop();
+                voice.PlayOneShot(connRestoredVoice);
+            }
+
             worldMessage.ShowMessage("Energia restablecida. La puerta principal se ha desbloqueado. ¡Es mi oportunidad de escapar!");
             return;
         }
@@ -42,6 +52,11 @@ public class TechBoxInteractable : MonoBehaviour, Interactable
 
         if (!isFirstBox && !otherBox.isOn)
         {
+            if (voice != null && connInterruptedVoice != null && !voice.isPlaying)
+            {
+                voice.PlayOneShot(connInterruptedVoice);
+            }
+
             worldMessage.ShowMessage("Primero repara la caja 1.");
             return;
         }

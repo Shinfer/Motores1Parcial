@@ -6,6 +6,11 @@ public class EnemyEventManager : MonoBehaviour
     [Header("Enemy Prefab")]
     [SerializeField] private GameObject enemyPrefab;
 
+    [Header("Danger Voice")]
+    [SerializeField] private AudioSource voice;
+    [SerializeField] private AudioClip dangerVoice;
+    
+
     [Header("Stairs Event")]
     [SerializeField] private EnemyEventTrigger stairsStart;
     [SerializeField] private EnemyEventTrigger stairsEnd;
@@ -118,6 +123,12 @@ public class EnemyEventManager : MonoBehaviour
                 enemySpawnPoints[i].position,
                 enemySpawnPoints[i].rotation
             );
+        }
+
+        // Reproduce la voz de peligro.
+        if (voice != null && dangerVoice != null)
+        {
+            voice.PlayOneShot(dangerVoice);
         }
 
         // Comienza el movimiento de los enemigos.
