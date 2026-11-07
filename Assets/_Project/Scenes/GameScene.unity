@@ -4889,6 +4889,14 @@ PrefabInstance:
       value: PF_Switch7
       objectReference: {fileID: 0}
     - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: lightOnSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: controlledLights.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
       propertyPath: 'lightOnSounds.Array.data[0]'
       value: 
       objectReference: {fileID: 1259946327}
@@ -11507,6 +11515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1287010383}
   - component: {fileID: 1287010384}
+  - component: {fileID: 1287010385}
   m_Layer: 0
   m_Name: Game_Music
   m_TagString: Untagged
@@ -11626,6 +11635,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1287010385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287010382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17809d287535a64e811fa056f46f369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicDucking
+  music: {fileID: 1287010384}
+  voice: {fileID: 399134209}
+  duckingFactor: 0.35
+  fadeDown: 0.15
+  fadeUp: 0.6
 --- !u!1001 &1299578739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13526,6 +13552,14 @@ PrefabInstance:
       value: PF_Switch5
       objectReference: {fileID: 0}
     - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: lightOnSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: controlledLights.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
       propertyPath: 'lightOnSounds.Array.data[0]'
       value: 
       objectReference: {fileID: 1908224622}
@@ -15346,6 +15380,14 @@ PrefabInstance:
       value: PF_Switch8
       objectReference: {fileID: 0}
     - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: lightOnSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: controlledLights.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
       propertyPath: 'lightOnSounds.Array.data[0]'
       value: 
       objectReference: {fileID: 2041457439}
@@ -16644,6 +16686,14 @@ PrefabInstance:
       value: PF_Switch3
       objectReference: {fileID: 0}
     - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: lightOnSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: controlledLights.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
       propertyPath: 'lightOnSounds.Array.data[0]'
       value: 
       objectReference: {fileID: 2129101261}
@@ -17590,6 +17640,14 @@ PrefabInstance:
     - target: {fileID: 6955212366317577751, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
       propertyPath: m_Name
       value: PF_Switch6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: lightOnSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
+      propertyPath: controlledLights.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7467068199951571448, guid: 8c8a5eb6d0d81c245aff2fca0ee0bd1d, type: 3}
       propertyPath: 'lightOnSounds.Array.data[0]'
