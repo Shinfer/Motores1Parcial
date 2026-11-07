@@ -61,13 +61,26 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!245 &-961709375279790313
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Interior
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: ebcb0af116640df4ca69aa2b983b4cf6
+  m_FloatValues:
+    97839692a2cbe7641be2c1631fcb11ac: -18
+    4f795ea69a577bf47887698d89ad5a2c: -6
+  m_TransitionOverrides: {}
 --- !u!243 &-724652437082206635
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FX
+  m_Name: SFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 5f30a44183822814e988036976f405c4
   m_Children: []
@@ -91,13 +104,12 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
+  - {fileID: -961709375279790313}
   m_StartSnapshot: {fileID: 24500006}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
-  - guid: 97839692a2cbe7641be2c1631fcb11ac
-    name: AmbienteVolume
   - guid: c219cf048e89e63439089d47d16d47ea
     name: FXVolume
   - guid: 517e68173907ec34ca8e783c47bc370e
@@ -113,7 +125,7 @@ AudioMixerController:
     - 27ffccd26f356104aa1dae041989829a
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 24500006}
+  m_TargetSnapshot: {fileID: -961709375279790313}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -157,10 +169,11 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Snapshot
+  m_Name: Exterior
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 96d702a30c5151d4aa72a2a6e19a1faf
-  m_FloatValues: {}
+  m_FloatValues:
+    4f795ea69a577bf47887698d89ad5a2c: -12
   m_TransitionOverrides: {}
 --- !u!243 &1246281045928877129
 AudioMixerGroupController:
