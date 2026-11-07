@@ -87,6 +87,8 @@ public class SwitchInteractable : MonoBehaviour, Interactable
             if (sound != null)
             {
                 sound.loop = true;
+                sound.pitch = Random.Range(0.80f, 1.20f);
+                Debug.Log($"Luz {sound.name} - Pitch: {sound.pitch:F3}", sound);
                 sound.Play();
             }
         }

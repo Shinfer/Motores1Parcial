@@ -47,7 +47,12 @@ public class DoorInteractable : MonoBehaviour, Interactable
             return;
 
         if (doorSound != null)
+        {
+            doorSound.pitch = Random.Range(0.80f, 1.20f); // cambiamos el pitch para que no suene siempre igual
+            Debug.Log($"Puerta {name} - Pitch: {doorSound.pitch:F3}", this);
             doorSound.Play();
+        }
+
 
         if (isOpen)
             CloseDoor();

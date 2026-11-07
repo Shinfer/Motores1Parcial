@@ -161,10 +161,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   controlledLights:
   - {fileID: 0}
+  - {fileID: 0}
   worldMessage: {fileID: 2122933938552923612}
   switchSound: {fileID: 3766583713214122702}
   lightOnSounds:
-  - {fileID: 3766583713214122702}
+  - {fileID: 0}
+  - {fileID: 0}
   startsOn: 0
   lightDuration: 5
   materialEncendido: {fileID: 2100000, guid: 81a4ece778899274f81e8b98fb55ace4, type: 2}
@@ -189,11 +191,11 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 3
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
