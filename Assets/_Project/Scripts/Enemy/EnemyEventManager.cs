@@ -6,10 +6,11 @@ public class EnemyEventManager : MonoBehaviour
     [Header("Enemy Prefab")]
     [SerializeField] private GameObject enemyPrefab;
 
-    [Header("Danger Voice")]
+    [Header("Audio")]
     [SerializeField] private AudioSource voice;
     [SerializeField] private AudioClip dangerVoice;
-    
+    [SerializeField] private AudioSource outbreakSound;
+
 
     [Header("Stairs Event")]
     [SerializeField] private EnemyEventTrigger stairsStart;
@@ -73,6 +74,12 @@ public class EnemyEventManager : MonoBehaviour
                 }
 
                 enemiesMoving = false;
+
+                // Reproduce la voz de peligro.
+                if (voice != null && dangerVoice != null)
+                {
+                    voice.PlayOneShot(dangerVoice);
+                }
             }
         }
     }
@@ -125,11 +132,9 @@ public class EnemyEventManager : MonoBehaviour
             );
         }
 
-        // Reproduce la voz de peligro.
-        if (voice != null && dangerVoice != null)
-        {
-            voice.PlayOneShot(dangerVoice);
-        }
+        // Reproduce el efecto al aparecer las bestias.
+        if (outbreakSound != null)
+            outbreakSound.Play();
 
         // Comienza el movimiento de los enemigos.
         movementTimer = 0f;
