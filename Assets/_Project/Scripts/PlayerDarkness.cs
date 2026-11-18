@@ -15,6 +15,7 @@ public class PlayerDarkness : MonoBehaviour
 
     private readonly List<LightZone> currentZones = new List<LightZone>();
     private float remainingTime;
+    private bool isChasing;
 
     private void Start()
     {
@@ -24,6 +25,18 @@ public class PlayerDarkness : MonoBehaviour
 
     private void Update()
     {
+        if (isChasing)
+        {
+            countdownText.color = Color.white;
+            countdownText.gameObject.SetActive(true);
+
+            countdownText.text = Mathf.Clamp(
+                Mathf.CeilToInt(remainingTime) - 1, 1, 9
+            ).ToString();
+
+            return;
+        }
+        countdownText.color = Color.red;
         bool illuminated = flashlight.flashlightLight.enabled;
 
         foreach (LightZone zone in currentZones)
@@ -60,5 +73,9 @@ public class PlayerDarkness : MonoBehaviour
     public void ExitZone(LightZone zone)
     {
         currentZones.Remove(zone);
+    }
+    public void SetChasing(bool chasing)
+    {
+        isChasing = chasing;
     }
 }
