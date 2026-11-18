@@ -73,7 +73,7 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   lookTarget: {fileID: 0}
   arrivalPoint: {fileID: 0}
-  destinationLoop: {fileID: 0}
+  destinationLoop: {fileID: 6014435094516184358}
   lookThreshold: 0.9
 --- !u!1 &6221446457024302404
 GameObject:

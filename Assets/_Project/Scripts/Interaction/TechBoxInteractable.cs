@@ -11,13 +11,17 @@ public class TechBoxInteractable : MonoBehaviour, Interactable
     [SerializeField] private AudioSource voice;
     [SerializeField] private AudioClip connInterruptedVoice;
     [SerializeField] private AudioClip connRestoredVoice;
+    [SerializeField] private CurrentObjective currentObjective;
+    [Header("Smoke Particles")]
 
     [Header("Settings")]
     [SerializeField] private bool isFirstBox;
 
     private bool isOn;
     private bool escapeStarted;
-
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem smokeParticles;
+    [SerializeField] private BuildingBlocker buildingBlocker;
     private void Start()
     {
         if (staticSound != null)
@@ -25,6 +29,8 @@ public class TechBoxInteractable : MonoBehaviour, Interactable
             staticSound.loop = true;
             staticSound.Play();
         }
+        if (smokeParticles != null)
+            smokeParticles.Play();
     }
 
     public void Interact(Transform player)
@@ -33,7 +39,7 @@ public class TechBoxInteractable : MonoBehaviour, Interactable
         {
             escapeStarted = true;
             finalDoor.Unlock();
-
+            currentObjective.NextObjective();
             if (voice != null && connRestoredVoice != null)
             {
                 voice.Stop();
@@ -65,6 +71,12 @@ public class TechBoxInteractable : MonoBehaviour, Interactable
         flashlight.HalveBattery();
 
         StopStatic();
+        currentObjective.NextObjective();
+        if (isFirstBox && buildingBlocker != null)
+            buildingBlocker.UnlockBlocker();
+
+        if (smokeParticles != null)
+            smokeParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 
         worldMessage.ShowMessage("Caja reparada. Bateria de linterna reducida a la mitad.");
     }
