@@ -1,24 +1,31 @@
-
 using UnityEngine;
 
 public class BuildingBlocker : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Light controlledLight;
     [SerializeField] private GameObject blockerPrefab;
     [SerializeField] private Transform spawnPoint;
-
     private GameObject currentBlocker;
+    private bool permanentlyUnlocked;
 
-    private void Update()
-    {        
-        if (controlledLight.enabled && currentBlocker == null) // Si la luz esta encendida, crea el bloqueo.
-        {
-            currentBlocker = Instantiate(blockerPrefab, spawnPoint.position, spawnPoint.rotation); // Instancia el prefab en el punto configurado.
-        }        
-        if (!controlledLight.enabled && currentBlocker != null) // Si la luz esta apagada, elimina el bloqueo.
-        {
-            Destroy(currentBlocker); // Destruye solamente el bloqueo creado por este script.
-        }
+    public void ActivateBlocker()
+    {
+        if (permanentlyUnlocked || currentBlocker != null)
+            return;
+
+        currentBlocker = Instantiate(blockerPrefab, spawnPoint.position, spawnPoint.rotation);
+    }
+    public void DeactivateBlocker()
+    {
+        if (currentBlocker == null)
+            return;
+
+        Destroy(currentBlocker);
+        currentBlocker = null;
+    }
+    public void UnlockBlocker()
+    {
+        permanentlyUnlocked = true;
+        DeactivateBlocker();
     }
 }
