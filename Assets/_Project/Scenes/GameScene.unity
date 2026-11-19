@@ -821,14 +821,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 98571173348617745, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2447734135011552673, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2447734135011552673, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633279349268811078, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7396856126301017197, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1210689037}
+    - target: {fileID: 7396856126301017197, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
+      propertyPath: enemyAnimator
+      value: 
+      objectReference: {fileID: 848894127}
+    - target: {fileID: 7396856126301017197, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
+      propertyPath: attackDuration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7396856126301017197, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
       propertyPath: heartbeatAudio
       value: 
@@ -16948,6 +16968,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &848894127 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2447734135011552673, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
+  m_PrefabInstance: {fileID: 119792547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &851298015
 GameObject:
   m_ObjectHideFlags: 0
@@ -31682,7 +31707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8958756156377640289, guid: 9655e4e4e281cfa408037eb82b04a340, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -25,138 +24,51 @@ public class EnemyChaser : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator enemyAnimator;
-    [SerializeField] private float attackDuration = 0.8f;
+
+    // Se modificó de 0.8f a 2f para permitir que termine
+    // la animación de ataque antes de resolver la consecuencia.
+    [SerializeField] private float attackDuration = 2f;
 
     private Renderer[] renderers;
     private Collider enemyCollider;
 
+    // Estados del enemigo.
     private bool isVisible;
     private bool isChasing;
     private bool isAttacking;
-    private bool blinkOn = true;
 
-    private float timer;
+    // Guarda si el golpe acertó en el momento del evento de animación.
+    private bool attackHit;
+
+    // Variables del parpadeo, actualmente desactivado en Update.
+    private bool blinkOn = true;
     private float blinkTimer;
 
-    // DEBUG: controla la frecuencia de los mensajes.
-    private float debugTimer;
-
-    // DEBUG: hueso que vamos a observar para comprobar
-    // si el Animator realmente mueve el esqueleto.
-    private Transform debugBone;
-    private Quaternion lastBoneRotation;
+    // Se reutiliza para aparición, persecución y espera de reaparición.
+    private float timer;
 
     private void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
         enemyCollider = GetComponent<Collider>();
 
+        // Si no se asignó un Animator en el Inspector, intenta encontrarlo.
         if (enemyAnimator == null)
             enemyAnimator = GetComponentInChildren<Animator>();
 
-        // DEBUG: revisar las referencias y el Animator al iniciar.
-        Debug.Log("[ENEMY DEBUG] ===== INICIO =====");
-        Debug.Log("[ENEMY DEBUG] Objeto enemigo: " + gameObject.name);
-        Debug.Log("[ENEMY DEBUG] Player: " +
-            (player != null ? player.name : "SIN ASIGNAR"));
-        Debug.Log("[ENEMY DEBUG] SpawnPoints: " + spawnPoints.Length);
-
-        if (enemyAnimator != null)
-        {
-            Debug.Log("[ENEMY DEBUG] Animator encontrado: " +
-                GetObjectPath(enemyAnimator.transform));
-
-            Debug.Log("[ENEMY DEBUG] Animator enabled: " +
-                enemyAnimator.enabled);
-
-            Debug.Log("[ENEMY DEBUG] GameObject activo: " +
-                enemyAnimator.gameObject.activeInHierarchy);
-
-            Debug.Log("[ENEMY DEBUG] Controller: " +
-                (enemyAnimator.runtimeAnimatorController != null
-                    ? enemyAnimator.runtimeAnimatorController.name
-                    : "SIN CONTROLLER"));
-
-            Debug.Log("[ENEMY DEBUG] Avatar: " +
-                (enemyAnimator.avatar != null
-                    ? enemyAnimator.avatar.name
-                    : "SIN AVATAR"));
-
-            Debug.Log("[ENEMY DEBUG] Avatar valido: " +
-                (enemyAnimator.avatar != null &&
-                 enemyAnimator.avatar.isValid));
-
-            Debug.Log("[ENEMY DEBUG] Apply Root Motion: " +
-                enemyAnimator.applyRootMotion);
-
-            // DEBUG: listar todos los parametros reales del Animator.
-            foreach (AnimatorControllerParameter parameter
-                in enemyAnimator.parameters)
-            {
-                Debug.Log("[ENEMY DEBUG] Parametro: " +
-                    parameter.name + " | Tipo: " + parameter.type);
-            }
-
-            // DEBUG: listar los clips disponibles en el Controller.
-            if (enemyAnimator.runtimeAnimatorController != null)
-            {
-                foreach (AnimationClip clip in
-                    enemyAnimator.runtimeAnimatorController.animationClips)
-                {
-                    Debug.Log("[ENEMY DEBUG] Clip: " +
-                        clip.name + " | Duracion: " +
-                        clip.length + " | Loop: " +
-                        clip.isLooping);
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("[ENEMY DEBUG] NO SE ENCONTRO ANIMATOR");
-        }
-
-        // DEBUG: comprobar los Skinned Mesh Renderer y sus huesos.
-        SkinnedMeshRenderer[] meshes =
-            GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        Debug.Log("[ENEMY DEBUG] Skinned Mesh Renderers: " +
-            meshes.Length);
-
-        foreach (SkinnedMeshRenderer mesh in meshes)
-        {
-            Debug.Log("[ENEMY DEBUG] Mesh: " +
-                GetObjectPath(mesh.transform));
-
-            Debug.Log("[ENEMY DEBUG] Root Bone: " +
-                (mesh.rootBone != null
-                    ? GetObjectPath(mesh.rootBone)
-                    : "SIN ROOT BONE"));
-
-            Debug.Log("[ENEMY DEBUG] Cantidad de huesos: " +
-                mesh.bones.Length);
-
-            // DEBUG: guardar un hueso para observar su movimiento.
-            if (debugBone == null && mesh.bones.Length > 0)
-                debugBone = mesh.bones[0];
-        }
-
-        if (debugBone != null)
-        {
-            lastBoneRotation = debugBone.localRotation;
-            Debug.Log("[ENEMY DEBUG] Hueso observado: " +
-                GetObjectPath(debugBone));
-        }
-
+        // Comienza oculto y espera antes de aparecer.
         HideEnemy();
     }
 
     private void Update()
     {
+        // Durante el ataque no se desplaza ni actualiza el temporizador.
         if (isAttacking)
             return;
 
         timer -= Time.deltaTime;
 
+        // Mientras está oculto, espera para volver a aparecer.
         if (!isVisible)
         {
             if (timer <= 0f)
@@ -169,29 +81,20 @@ public class EnemyChaser : MonoBehaviour
         {
             ChasePlayer();
 
+            // ChasePlayer puede iniciar un ataque.
             if (isAttacking)
                 return;
 
-            Blink();
-
-            // DEBUG: revisar el Animator durante la persecucion.
-            debugTimer -= Time.deltaTime;
-
-            if (debugTimer <= 0f)
-            {
-                DebugAnimatorState();
-                debugTimer = 0.5f;
-            }
+            // Parpadeo desactivado para mantener visible al enemigo.
+            // Blink();
 
             if (timer <= 0f)
-            {
-                Debug.Log("[ENEMY DEBUG] FIN DE PERSECUCION");
                 HideEnemy();
-            }
 
             return;
         }
 
+        // Cuando está visible y no persigue, comprueba la distancia.
         float distance = Vector3.Distance(
             transform.position, player.position
         );
@@ -200,22 +103,16 @@ public class EnemyChaser : MonoBehaviour
         {
             isChasing = true;
             timer = chaseDuration;
-            debugTimer = 0.5f;
-
-            Debug.Log("[ENEMY DEBUG] ===== PERSECUCION =====");
-            Debug.Log("[ENEMY DEBUG] Distancia al jugador: " +
-                distance);
 
             if (enemyAnimator != null)
             {
-                enemyAnimator.Play("Walk");
+                // enemyAnimator.Play("Walk");
 
-                Debug.Log("[ENEMY DEBUG] SetBool IsChasing = TRUE");
-
-                Debug.Log("[ENEMY DEBUG] Valor leido: " +
-                    enemyAnimator.GetBool("IsChasing"));
+                // Activa la transición de idle a Walk.
+                enemyAnimator.SetBool("IsChasing", true);
             }
 
+            // Informa al sistema de oscuridad que comenzó la persecución.
             playerDarkness.SetChasing(true);
 
             enemyAudio.Stop();
@@ -227,12 +124,14 @@ public class EnemyChaser : MonoBehaviour
         }
         else if (timer <= 0f)
         {
+            // Desaparece si termina su tiempo visible sin detectar al jugador.
             HideEnemy();
         }
     }
 
     private void SpawnEnemy()
     {
+        // Selecciona un punto de aparición al azar.
         int index = Random.Range(0, spawnPoints.Length);
 
         transform.position = spawnPoints[index].position;
@@ -251,21 +150,17 @@ public class EnemyChaser : MonoBehaviour
         blinkOn = true;
         blinkTimer = 0.15f;
 
-        Debug.Log("[ENEMY DEBUG] ===== SPAWN =====");
-        Debug.Log("[ENEMY DEBUG] Spawn elegido: " +
-            spawnPoints[index].name);
-
         if (enemyAnimator != null)
         {
             enemyAnimator.SetBool("IsChasing", false);
-            //enemyAnimator.Play("idle", 0, 0f);
 
-            Debug.Log("[ENEMY DEBUG] Orden enviada: Play idle");
+            // enemyAnimator.Play("idle", 0, 0f);
         }
     }
 
     private void HideEnemy()
     {
+        // Oculta el modelo y desactiva su collider.
         foreach (Renderer r in renderers)
             r.enabled = false;
 
@@ -274,6 +169,7 @@ public class EnemyChaser : MonoBehaviour
         isVisible = false;
         isChasing = false;
 
+        // Tiempo de espera antes de la siguiente aparición.
         timer = respawnDelay;
 
         if (enemyAnimator != null)
@@ -282,13 +178,11 @@ public class EnemyChaser : MonoBehaviour
         playerDarkness.SetChasing(false);
         enemyAudio.Stop();
         heartbeatAudio.Stop();
-
-        // DEBUG: confirmar la desaparicion.
-        Debug.Log("[ENEMY DEBUG] Enemigo oculto");
     }
 
     private void ChasePlayer()
     {
+        // Persigue al jugador manteniendo la altura actual del enemigo.
         Vector3 target = player.position;
         target.y = transform.position.y;
 
@@ -307,47 +201,87 @@ public class EnemyChaser : MonoBehaviour
             transform.position, target
         );
 
+        // Inicia el ataque cuando llega al alcance configurado.
         if (distance <= attackDistance)
             StartCoroutine(AttackPlayer());
     }
 
+    // El evento CheckHit del clip attack llama a este método
+    // en el momento elegido para el impacto.
+    public void CheckHit()
+    {
+        if (!isAttacking || player == null)
+            return;
+
+        // Comprueba distancia y dirección en el plano horizontal.
+        Vector3 direction = player.position - transform.position;
+        direction.y = 0f;
+
+        float distance = direction.magnitude;
+        float angle = Vector3.Angle(transform.forward, direction);
+
+        // Acierta si el jugador está dentro del alcance y delante:
+        // hasta 45 grados a cada lado del frente del enemigo.
+        // Es una comprobación por distancia y ángulo, no por contacto de la mano.
+        attackHit = distance <= attackDistance && angle <= 45f;
+    }
+
     private IEnumerator AttackPlayer()
     {
-        Debug.Log("[ENEMY DEBUG] ===== ATAQUE =====");
-
+        // Detiene la persecución y reinicia el resultado del golpe.
         isAttacking = true;
         isChasing = false;
+        attackHit = false;
 
         if (enemyAnimator != null)
-        {
             enemyAnimator.SetTrigger("Attack");
-            Debug.Log("[ENEMY DEBUG] Trigger Attack enviado");
-        }
 
+        // Mantiene visible al enemigo durante el ataque.
         foreach (Renderer r in renderers)
             r.enabled = true;
 
         enemyAudio.Stop();
         heartbeatAudio.Stop();
 
-        Debug.Log("[ENEMY DEBUG] Esperando animacion de ataque");
+        // Durante esta espera, el evento de animación llama a CheckHit.
+        yield return new WaitForSeconds(attackDuration);
 
-        yield return new WaitForSecondsRealtime(attackDuration);
+        // Usa el resultado registrado en el instante del impacto.
+        if (attackHit)
+        {
+            SceneManager.LoadScene("DeathScene");
+            yield break;
+        }
 
-        Debug.Log("[ENEMY DEBUG] Cargando DeathScene");
+        // Si el golpe falló, retoma la persecución.
+        isAttacking = false;
+        isChasing = true;
+        timer = chaseDuration;
 
-        SceneManager.LoadScene("DeathScene");
+        if (enemyAnimator != null)
+        {
+            enemyAnimator.ResetTrigger("Attack");
+            enemyAnimator.SetBool("IsChasing", true);
+
+            // Regresa directamente al estado Walk.
+            enemyAnimator.Play("Walk", 0, 0f);
+        }
+
+        enemyAudio.clip = chaseSound;
+        enemyAudio.loop = true;
+        enemyAudio.Play();
+        heartbeatAudio.Play();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // DEBUG: comprobar que el collider detecte al jugador.
-        Debug.Log("[ENEMY DEBUG] Contacto con: " + other.name);
-
+        // También puede iniciar el ataque al entrar en contacto con el jugador.
         if (isChasing && !isAttacking && other.CompareTag("Player"))
             StartCoroutine(AttackPlayer());
     }
 
+    // Conservado para reutilizarlo si se desea.
+    // Actualmente no se llama porque Blink() está comentado en Update.
     private void Blink()
     {
         blinkTimer -= Time.deltaTime;
@@ -361,82 +295,5 @@ public class EnemyChaser : MonoBehaviour
 
             blinkTimer = 0.15f;
         }
-    }
-
-    // DEBUG: informacion sobre el estado real del Animator.
-    private void DebugAnimatorState()
-    {
-        if (enemyAnimator == null)
-            return;
-
-        AnimatorStateInfo state =
-            enemyAnimator.GetCurrentAnimatorStateInfo(0);
-
-        Debug.Log("[ENEMY DEBUG] ----- ESTADO -----");
-
-        Debug.Log("[ENEMY DEBUG] Animator: " +
-            GetObjectPath(enemyAnimator.transform));
-
-        Debug.Log("[ENEMY DEBUG] IsChasing: " +
-            enemyAnimator.GetBool("IsChasing"));
-
-        Debug.Log("[ENEMY DEBUG] Animator inicializado: " +
-            enemyAnimator.isInitialized);
-
-        Debug.Log("[ENEMY DEBUG] En transicion: " +
-            enemyAnimator.IsInTransition(0));
-
-        Debug.Log("[ENEMY DEBUG] Estado idle: " +
-            state.IsName("idle"));
-
-        Debug.Log("[ENEMY DEBUG] Estado Walk: " +
-            state.IsName("Walk"));
-
-        Debug.Log("[ENEMY DEBUG] Estado attack: " +
-            state.IsName("attack"));
-
-        Debug.Log("[ENEMY DEBUG] Tiempo normalizado: " +
-            state.normalizedTime);
-
-        // DEBUG: comprobar cual clip esta reproduciendose.
-        AnimatorClipInfo[] clips =
-            enemyAnimator.GetCurrentAnimatorClipInfo(0);
-
-        foreach (AnimatorClipInfo clip in clips)
-        {
-            Debug.Log("[ENEMY DEBUG] Clip activo: " +
-                clip.clip.name + " | Peso: " + clip.weight);
-        }
-
-        // DEBUG: comprobar si un hueso cambia su rotacion.
-        if (debugBone != null)
-        {
-            float rotationChange = Quaternion.Angle(
-                lastBoneRotation, debugBone.localRotation
-            );
-
-            Debug.Log("[ENEMY DEBUG] Hueso: " +
-                debugBone.name);
-
-            Debug.Log("[ENEMY DEBUG] Cambio de rotacion del hueso: " +
-                rotationChange);
-
-            lastBoneRotation = debugBone.localRotation;
-        }
-    }
-
-    // DEBUG: devuelve la ruta completa de un objeto
-    // para distinguir los SlendrinaMom con nombres repetidos.
-    private string GetObjectPath(Transform objectTransform)
-    {
-        string path = objectTransform.name;
-
-        while (objectTransform.parent != null)
-        {
-            objectTransform = objectTransform.parent;
-            path = objectTransform.name + "/" + path;
-        }
-
-        return path;
     }
 }
