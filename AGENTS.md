@@ -2,7 +2,7 @@
 - Project name: Motores1Parcial
 - Unity version: Unity 6000.3.5f2
 - Active game object:
-  - Name: Spawn_01_PlantaBaja
+  - Name: SliderFX
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
