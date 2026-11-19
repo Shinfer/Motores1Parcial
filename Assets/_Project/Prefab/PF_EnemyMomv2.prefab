@@ -264,7 +264,7 @@ MonoBehaviour:
   spawnDuration: 10
   respawnDelay: 3
   enemyAudio: {fileID: 6259655278594454180}
-  chaseSound: {fileID: 8300000, guid: 1e10e36d171e09342a617b5030afd8fb, type: 3}
+  chaseSound: {fileID: 8300000, guid: e53dc164633d6494bb9b0ba375c88731, type: 3}
   heartbeatAudio: {fileID: 0}
   enemyAnimator: {fileID: 2870019235501782693}
   attackDuration: 2
