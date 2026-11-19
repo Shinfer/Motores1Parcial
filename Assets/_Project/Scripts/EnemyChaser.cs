@@ -11,6 +11,7 @@ public class EnemyChaser : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float detectionDistance = 5f;
+    [SerializeField] private float maxVerticalDistance = 1.5f;
     [SerializeField] private float chaseSpeed = 3f;
     [SerializeField] private float chaseDuration = 5f;
     [SerializeField] private float attackDistance = 1f;
@@ -99,7 +100,8 @@ public class EnemyChaser : MonoBehaviour
             transform.position, player.position
         );
 
-        if (distance <= detectionDistance)
+        // Solo detecta al jugador si está aproximadamente en el mismo piso.
+        if (distance <= detectionDistance && IsOnSameFloor())
         {
             isChasing = true;
             timer = chaseDuration;
@@ -182,7 +184,14 @@ public class EnemyChaser : MonoBehaviour
 
     private void ChasePlayer()
     {
-        // Persigue al jugador manteniendo la altura actual del enemigo.
+        // Si el jugador cambia de piso, termina la persecución.
+        if (!IsOnSameFloor())
+        {
+            HideEnemy();
+            return;
+        }
+
+        // Persigue al jugador solo en X y Z, sin subir ni bajar.
         Vector3 target = player.position;
         target.y = transform.position.y;
 
@@ -223,7 +232,7 @@ public class EnemyChaser : MonoBehaviour
         // Acierta si el jugador está dentro del alcance y delante:
         // hasta 45 grados a cada lado del frente del enemigo.
         // Es una comprobación por distancia y ángulo, no por contacto de la mano.
-        attackHit = distance <= attackDistance && angle <= 45f;
+        attackHit = IsOnSameFloor() && distance <= attackDistance && angle <= 45f;
     }
 
     private IEnumerator AttackPlayer()
@@ -253,6 +262,14 @@ public class EnemyChaser : MonoBehaviour
             yield break;
         }
 
+        // Si el jugador cambió de piso durante el ataque, desaparece.
+        if (!IsOnSameFloor())
+        {
+            isAttacking = false;
+            HideEnemy();
+            yield break;
+        }
+
         // Si el golpe falló, retoma la persecución.
         isAttacking = false;
         isChasing = true;
@@ -276,8 +293,14 @@ public class EnemyChaser : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // También puede iniciar el ataque al entrar en contacto con el jugador.
-        if (isChasing && !isAttacking && other.CompareTag("Player"))
+        if (isChasing && !isAttacking && IsOnSameFloor() && other.CompareTag("Player"))
             StartCoroutine(AttackPlayer());
+    }
+
+    // Controla que el jugador no esté en otro piso.
+    private bool IsOnSameFloor()
+    {
+        return Mathf.Abs(player.position.y - transform.position.y) <= maxVerticalDistance;
     }
 
     // Conservado para reutilizarlo si se desea.
